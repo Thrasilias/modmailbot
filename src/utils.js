@@ -154,7 +154,7 @@ function getUserMention(str) {
  * @returns {String}
  */
 function getTimestamp(...momentArgs) {
-  return moment.utc(...momentArgs).format("HH:mm");
+  return moment.utc(...momentArgs).format("HH:mm:ss");
 }
 
 /**
@@ -177,7 +177,7 @@ async function getSelfUrl(path = "") {
   } else {
     const port = config.port || 8890;
     const ip = await publicIp.v4();
-    return `http://${ip}:${port}/${path}`;
+    return "http://${ip}:${port}/${path}";
   }
 }
 

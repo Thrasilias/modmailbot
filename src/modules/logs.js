@@ -86,18 +86,18 @@ module.exports = ({ bot, knex, config, commands, hooks }) => {
 
     const logUrl = await getLogUrl(thread);
     if (logUrl) {
-      msg.channel.createMessage(`Open the following link to view the log for thread #${thread.thread_number}:\n<${addOptQueryStringToUrl(logUrl, args)}>`);
+      msg.channel.createMessage("Open the following link to view the log for thread #${thread.thread_number}:\n<${addOptQueryStringToUrl(logUrl, args)}>");
       return;
     }
 
     const logFile = await getLogFile(thread);
     if (logFile) {
-      msg.channel.createMessage(`Download the following file to view the log for thread #${thread.thread_number}:`, logFile);
+      msg.channel.createMessage("Download the following file to view the log for thread #${thread.thread_number}:", logFile);
       return;
     }
 
     if (thread.status === THREAD_STATUS.OPEN) {
-      msg.channel.createMessage(`This thread's logs are not currently available, but it's open at <#${thread.channel_id}>`);
+      msg.channel.createMessage("This thread's logs are not currently available, but it's open at <#${thread.channel_id}>");
       return;
     }
 

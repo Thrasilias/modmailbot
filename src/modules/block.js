@@ -11,7 +11,7 @@ module.exports = ({ bot, knex, config, commands }) => {
     for (const userId of expiredBlocks) {
       await blocked.unblock(userId);
       logChannel.createMessage({
-        content: `Block of <@!${userId}> (id \`${userId}\`) expired`,
+        content: "Block of <@!${userId}> (id \"${userId}\") expired",
         allowedMentions: {
           users: [userId],
         },
@@ -46,13 +46,13 @@ module.exports = ({ bot, knex, config, commands }) => {
       : null;
 
     const user = bot.users.get(userIdToBlock);
-    await blocked.block(userIdToBlock, (user ? `${user.username}#${user.discriminator}` : ""), msg.author.id, expiresAt);
+    await blocked.block(userIdToBlock, (user ? "${user.username}#${user.discriminator}" : ""), msg.author.id, expiresAt);
 
     if (expiresAt) {
       const humanized = humanizeDuration(args.blockTime, { largest: 2, round: true });
-      msg.channel.createMessage(`Blocked <@${userIdToBlock}> (id \`${userIdToBlock}\`) from modmail for ${humanized}`);
+      msg.channel.createMessage("Blocked <@${userIdToBlock}> (id \"${userIdToBlock}\") from modmail for ${humanized}");
     } else {
-      msg.channel.createMessage(`Blocked <@${userIdToBlock}> (id \`${userIdToBlock}\`) from modmail indefinitely`);
+      msg.channel.createMessage("Blocked <@${userIdToBlock}> (id \"${userIdToBlock}\") from modmail indefinitely");
     }
   };
 
@@ -77,10 +77,10 @@ module.exports = ({ bot, knex, config, commands }) => {
     if (unblockAt) {
       const humanized = humanizeDuration(args.unblockDelay, { largest: 2, round: true });
       await blocked.updateExpiryTime(userIdToUnblock, unblockAt);
-      msg.channel.createMessage(`Scheduled <@${userIdToUnblock}> (id \`${userIdToUnblock}\`) to be unblocked in ${humanized}`);
+      msg.channel.createMessage("Scheduled <@${userIdToUnblock}> (id \"${userIdToUnblock}\") to be unblocked in ${humanized}");
     } else {
       await blocked.unblock(userIdToUnblock);
-      msg.channel.createMessage(`Unblocked <@${userIdToUnblock}> (id ${userIdToUnblock}) from modmail`);
+      msg.channel.createMessage("Unblocked <@${userIdToUnblock}> (id ${userIdToUnblock}) from modmail");
     }
   };
 
@@ -95,18 +95,18 @@ module.exports = ({ bot, knex, config, commands }) => {
     if (blockStatus.isBlocked) {
       if (blockStatus.expiresAt) {
         msg.channel.createMessage({
-          content: `<@!${userIdToCheck}> (id \`${userIdToCheck}\`) is blocked until ${blockStatus.expiresAt} (UTC)`,
+          content: "<@!${userIdToCheck}> (id \"${userIdToCheck}\") is blocked until ${blockStatus.expiresAt} (UTC)",
           allowedMentions: { users: [userIdToCheck] },
         });
       } else {
         msg.channel.createMessage({
-          content: `<@!${userIdToCheck}> (id \`${userIdToCheck}\`) is blocked indefinitely`,
+          content: "<@!${userIdToCheck}> (id \"${userIdToCheck}\") is blocked indefinitely",
           allowedMentions: { users: [userIdToCheck] },
         });
       }
     } else {
       msg.channel.createMessage({
-        content: `<@!${userIdToCheck}> (id \`${userIdToCheck}\`) is NOT blocked`,
+        content: "<@!${userIdToCheck}> (id \"${userIdToCheck}\") is NOT blocked",
         allowedMentions: { users: [userIdToCheck] },
       });
     }

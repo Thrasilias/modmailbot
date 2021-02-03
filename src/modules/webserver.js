@@ -10,7 +10,7 @@ const threads = require("../data/threads");
 const attachments = require("../data/attachments");
 const { formatters } = require("../formatters");
 
-function notfound(res) {
+function notFound(res) {
   res.status(404).send("Page Not Found");
 }
 
@@ -20,7 +20,7 @@ function notfound(res) {
  */
 async function serveLogs(req, res) {
   const thread = await threads.findById(req.params.threadId);
-  if (! thread) return notfound(res);
+  if (! thread) return notFound(res);
 
   let threadMessages = await thread.getThreadMessages();
 
@@ -36,12 +36,12 @@ async function serveLogs(req, res) {
 }
 
 function serveAttachments(req, res) {
-  if (req.params.attachmentId.match(/^[0-9]+$/) === null) return notfound(res);
-  if (req.params.filename.match(/^[0-9a-z._-]+$/i) === null) return notfound(res);
+  if (req.params.attachmentId.match(/^[0-9]+$/) === null) return notFound(res);
+  if (req.params.filename.match(/^[0-9a-z._-]+$/i) === null) return notFound(res);
 
   const attachmentPath = attachments.getLocalAttachmentPath(req.params.attachmentId);
   fs.access(attachmentPath, (err) => {
-    if (err) return notfound(res);
+    if (err) return notFound(res);
 
     const filenameParts = req.params.filename.split(".");
     const ext = (filenameParts.length > 1 ? filenameParts[filenameParts.length - 1] : "bin");
